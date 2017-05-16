@@ -92,8 +92,8 @@ void create_image(int heigth, int width, struct Pixel pixel_table[heigth][width]
                 }
             } else {
                 fputc(pixel_table[heigth_index][width_index].red, output);
-                fputc(pixel_table[heigth_index][width_index].blue, output);
                 fputc(pixel_table[heigth_index][width_index].green, output);
+                fputc(pixel_table[heigth_index][width_index].blue, output);
             }
         }
 }
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 
     fread(&file_header, sizeof(unsigned char), sizeof(FILE_HEADER), input);
     fread(&image_header, sizeof(unsigned char), sizeof(IMAGE_HEADER), input);
-
+   
     fwrite(&file_header, sizeof(unsigned char), sizeof(FILE_HEADER), output);
     fwrite(&image_header, sizeof(unsigned char), sizeof(IMAGE_HEADER), output);
 
@@ -115,12 +115,14 @@ int main(int argc, char *argv[]) {
 
     get_pixel_table(image_header.heigth, image_header.width, pixel_table, input);
 
-    float img_average = get_img_average(image_header.heigth, image_header.width, pixel_table);
+//    float img_average = get_img_average(image_header.heigth, image_header.width, pixel_table);
 
-    treshold(image_header.heigth, image_header.width, pixel_table, img_average);
+//   treshold(image_header.heigth, image_header.width, pixel_table, img_average);
 
     create_image(image_header.heigth, image_header.width, pixel_table, output);
 
     fclose(input);
     fclose(output);
+
+    return 0;
 }
