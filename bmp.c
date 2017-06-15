@@ -43,7 +43,6 @@ void read_image(int heigth, int width, PIXEL image[heigth][width], unsigned int 
         fread(&padding_dump, sizeof(unsigned char), required_padding, input);
     }
 }
-<<<<<<< HEAD
 
 double get_pixel_val(PIXEL pixel) {
     return (0.9 * pixel.red + 0.05 * pixel.green + 0.05 * pixel.blue) / 3;
@@ -58,10 +57,6 @@ void convert_to_binary(int heigth, int width, PIXEL image[heigth][width], char b
 enum binary_colors {BLACK, WHITE};
 
 void write_image(int heigth, int width, char image[heigth][width], unsigned int image_offset, FILE *output) {
-=======
-
-void write_image(int heigth, int width, PIXEL image[heigth][width], unsigned int image_offset, FILE *output) {
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
     int subpixels_per_line = width * 3;
     int required_padding = (subpixels_per_line % 4) ? 4 - subpixels_per_line % 4 : 0;
     int padding_dump = 0;
@@ -71,7 +66,6 @@ void write_image(int heigth, int width, PIXEL image[heigth][width], unsigned int
     fwrite(&padding_dump, sizeof(unsigned char), gap, output);
 
     for (int heigth_index = heigth - 1; heigth_index >= 0; heigth_index--) {
-<<<<<<< HEAD
         for (int width_index = 0; width_index < width; width_index++) { 
             if (image[heigth_index][width_index] == BLACK) {
                 fputc(0, output);
@@ -82,36 +76,14 @@ void write_image(int heigth, int width, PIXEL image[heigth][width], unsigned int
                 fputc(255, output);
                 fputc(255, output);
             }
-=======
-        fwrite(&(image[heigth_index]), sizeof(PIXEL), width, output);
-        fwrite(&padding_dump, sizeof(unsigned char), required_padding, output);
-    }
-}
-
-void copy_image(int heigth, int width, PIXEL input[heigth][width], PIXEL output[heigth][width]) {
-    for (int heigth_index = 0; heigth_index < heigth; heigth_index++)
-        for (int width_index = 0; width_index < width; width_index++) {
-            output[heigth_index][width_index].red = input[heigth_index][width_index].red;
-            output[heigth_index][width_index].green = input[heigth_index][width_index].green;
-            output[heigth_index][width_index].blue = input[heigth_index][width_index].blue;
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
         }
 
-<<<<<<< HEAD
         fwrite(&padding_dump, sizeof(unsigned char), required_padding, output);
     }
 }
 
 double get_img_average(int heigth, int width, char image[heigth][width]) {
     double sum = 0;
-=======
-float get_pixel_val(PIXEL pixel) {
-    return (0.9 * pixel.red + 0.05 * pixel.green + 0.05 * pixel.blue) / 3;
-}
-
-float get_img_average(int heigth, int width, PIXEL pixel_table[heigth][width]) {
-    float sum = 0;
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
 
     for (int heigth_index = heigth - 1; heigth_index >= 0; heigth_index--)
         for (int width_index = 0; width_index < width; width_index++)
@@ -120,11 +92,7 @@ float get_img_average(int heigth, int width, PIXEL pixel_table[heigth][width]) {
     return sum / (heigth * width);
 }
 
-<<<<<<< HEAD
 void treshold(int heigth, int width, char image[heigth][width], float img_average) {
-=======
-void treshold(int heigth, int width, PIXEL pixel_table[heigth][width], float img_average) {
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
     for (int heigth_index = heigth - 1; heigth_index >= 0; heigth_index--)
         for (int width_index = 0; width_index < width; width_index++) 
             if (image[heigth_index][width_index] < img_average) 
@@ -133,10 +101,6 @@ void treshold(int heigth, int width, PIXEL pixel_table[heigth][width], float img
                 image[heigth_index][width_index] = WHITE;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
 void flood_fill(int y, int x, int width, int heigth, unsigned char new_color, unsigned char old_color, PIXEL image[heigth][width]) {
     if (y >= 0 && y < heigth && x >= 0 && y < width && image[y][x].red == old_color) {
         image[y][x].red = new_color;
@@ -150,7 +114,6 @@ void flood_fill(int y, int x, int width, int heigth, unsigned char new_color, un
     }
 }
 
-<<<<<<< HEAD
 enum struct_element_stats {FIT, HIT, OUT};
 
 /*
@@ -160,13 +123,6 @@ enum struct_element_stats {FIT, HIT, OUT};
 */
 
 int get_struct_element_status(int y, int x, int heigth, int width, char image[heigth][width], int struct_element_size) {
-=======
-#define FIT 2
-#define HIT 1
-#define OUT 0
-
-int get_struct_element_status(int y, int x, int heigth, int width, PIXEL image[heigth][width], int struct_element_size) {
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
     if (!(y < heigth && y > 0 && x < width && x > 0))
         return OUT;
 
@@ -174,11 +130,7 @@ int get_struct_element_status(int y, int x, int heigth, int width, PIXEL image[h
 
     for (int y_index = y; y_index < y + struct_element_size; y_index++)
         for (int x_index = x; x_index < x + struct_element_size; x_index++) 
-<<<<<<< HEAD
             if (image[y_index][x_index] == BLACK)
-=======
-            if (image[y_index][x_index].red == 255)
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
                 count++;
 
     if (count == struct_element_size * struct_element_size)
@@ -203,7 +155,6 @@ int get_struct_element_status(int y, int x, int heigth, int width, PIXEL image[h
         */
 }
 
-<<<<<<< HEAD
 void erosion(int heigth, int width, char input[heigth][width], char output[heigth][width], int struct_element_size) {
     for (int heigth_index = 0; heigth_index < heigth; heigth_index++)
         for (int width_index = 0; width_index < width; width_index++)
@@ -244,54 +195,7 @@ void debug(int heigth, int width, char input[heigth][width]) {
     for (int i = heigth - 1; i >= 0; i--)
         for (int j = 0; j < width; j++)
             printf("Pixel (%d, %d) : %d\n", i, j, input[i][j]);
-=======
-void erosion(int heigth, int width, PIXEL input[heigth][width], PIXEL output[heigth][width], int struct_element_size) {
-    for (int heigth_index = 0; heigth_index < heigth; heigth_index++)
-        for (int width_index = 0; width_index < width; width_index++) {
-            if (input[heigth_index][width_index].red == 255) {
-                if (get_struct_element_status(heigth_index, width_index, heigth, width, input, struct_element_size) != FIT) {
-                    output[heigth_index][width_index].red = 0;      
-                    output[heigth_index][width_index].green = 0;      
-                    output[heigth_index][width_index].blue = 0;      
-                }
-            }
-        }
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
 }
-
-void dilation(int heigth, int width, PIXEL input[heigth][width], PIXEL output[heigth][width], int struct_element_size) {
-    for (int heigth_index = 0; heigth_index < heigth; heigth_index++)
-        for (int width_index = 0; width_index < width; width_index++) {
-            if (input[heigth_index][width_index].red == 255) {
-                if (get_struct_element_status(heigth_index, width_index, heigth, width, input, struct_element_size) == HIT) {
-                    for (int y_index = heigth_index - 1; y_index <= heigth_index + 1 && y_index < heigth && y_index >= 0; y_index++)
-                        for (int x_index = width_index - 1; x_index <= width_index + 1 && x_index < width && x_index >= 0; x_index++) {
-                            output[y_index][x_index].red = 255;
-                            output[y_index][x_index].green = 255;
-                            output[y_index][x_index].blue = 255;
-                        }
-                }
-            }
-        }
-}
-
-void extra_dilation(int heigth, int width, PIXEL input[heigth][width], PIXEL output[heigth][width], int struct_element_size) {
-    PIXEL output_1[heigth][width];
-    PIXEL output_2[heigth][width];
-
-    dilation(heigth, width, input, output_1, struct_element_size);
-    dilation(heigth, width, output_1, output_2, struct_element_size);
-    dilation(heigth, width, output_2, output, struct_element_size);
-}
-
-void closing(int heigth, int width, PIXEL input[heigth][width], PIXEL output[heigth][width], int struct_element_size) {
-    PIXEL dilation_output[heigth][width];
-    copy_image(heigth, width, input, dilation_output);
-
-    dilation(heigth, width, input, dilation_output, struct_element_size);
-
-    erosion(heigth, width, dilation_output, output, struct_element_size);
-}    
 
 int main(int argc, char *argv[]) {
     FILE *input = fopen(argv[1], "rb");
@@ -306,11 +210,10 @@ int main(int argc, char *argv[]) {
     fwrite(&file_header, sizeof(unsigned char), sizeof(FILE_HEADER), output);
     fwrite(&image_header, sizeof(unsigned char), sizeof(IMAGE_HEADER), output);
 
-<<<<<<< HEAD
     PIXEL read_output[image_header.heigth][image_header.width];
     char image[image_header.heigth][image_header.width];
- //   char image_copy[image_header.heigth][image_header.width];
- //   char copy[image_header.heigth][image_header.width];
+    char image_copy[image_header.heigth][image_header.width];
+    char copy[image_header.heigth][image_header.width];
     
 
     read_image(image_header.heigth, image_header.width, read_output, file_header.image_data_offset, input);
@@ -337,8 +240,8 @@ int main(int argc, char *argv[]) {
     erosion(image_header.heigth, image_header.width, i3, i4, 6);
     dilation(image_header.heigth, image_header.width, i4, image, 6);
 
-//    memcpy(image_copy, image, image_header.heigth * image_header.width);
-//    memcpy(copy, image, image_header.heigth * image_header.width);
+    memcpy(image_copy, image, image_header.heigth * image_header.width);
+    memcpy(copy, image, image_header.heigth * image_header.width);
 
 //    closing(image_header.heigth, image_header.width, image_copy, copy, 6);
 //    erosion(image_header.heigth, image_header.width, copy, image, 3);
@@ -357,35 +260,6 @@ int main(int argc, char *argv[]) {
 
 //    debug(image_header.heigth, image_header.width, image);
 
-=======
-    PIXEL image[image_header.heigth][image_header.width];
-    PIXEL image_copy[image_header.heigth][image_header.width];
-
-    unsigned int image_offset = file_header.image_data_offset;
-
-    read_image(image_header.heigth, image_header.width, image, image_offset, input);
-
-    float img_average = get_img_average(image_header.heigth, image_header.width, image);
-
-    treshold(image_header.heigth, image_header.width, image, img_average);
-
-    copy_image(image_header.heigth, image_header.width, image, image_copy);
-
-    closing(image_header.heigth, image_header.width, image_copy, image, 15);
-
-//    flood_fill(200, 30, image_header.width, image_header.heigth, 100, 0, image); 
-
-//    dilation(image_header.heigth, image_header.width, image_copy, image, 3);
-/*    for (int x_index = 0; x_index < image_header.width; x_index++)
-        for (int y_index = 0; y_index < image_header.heigth; y_index++)
-            if (get_pixel_val(image[y_index][x_index]) == 0) {
-                image[y_index][x_index].red = 255;
-                image[y_index][x_index].green = 255;
-                image[y_index][x_index].blue = 255;
-            }
-*/
-    write_image(image_header.heigth, image_header.width, image, image_offset, output);
->>>>>>> 829bd050f656a13de11aa53a20f307f437f44eaa
 
     fclose(input);
     fclose(output);
